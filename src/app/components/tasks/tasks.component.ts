@@ -24,6 +24,12 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  addTask(task: Omit<ITask, 'id'>) {
+    this.taskService.addTask(task).subscribe((newTask) => {
+      this.tasks.push(newTask);
+    });
+  }
+
   toggleTask(task: ITask) {
     this.taskService.toggleReminder(task).subscribe((updatedTask) => {
       this.tasks = this.tasks.map((t: ITask) =>

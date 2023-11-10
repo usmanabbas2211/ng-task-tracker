@@ -3,10 +3,11 @@
   margin: 10px 5px;
   padding: 10px 20px;
   cursor: pointer;
+  user-select: none;
 
   &.reminder {
     /* border-left: 5px solid rgb(0, 113, 128); */
-    border-left: 5px solid rgb(23, 120, 185);
+    border-left: 5px solid steelblue;
   }
 }
 
