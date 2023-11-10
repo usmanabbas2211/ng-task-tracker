@@ -28,6 +28,10 @@ export class TaskService {
     return this.http.delete<number>(url);
   }
 
+  addTask(task: Omit<ITask, 'id'>): Observable<ITask> {
+    return this.http.post<ITask>(this.apiUrl, task, httpOptions);
+  }
+
   toggleReminder(task: ITask): Observable<ITask> {
     const url = `${this.apiUrl}/${task.id}`;
     return this.http.patch<ITask>(
