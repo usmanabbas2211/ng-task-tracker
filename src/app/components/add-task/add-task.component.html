@@ -1,4 +1,6 @@
-<form (ngSubmit)="onSubmit()"
+<form *ngIf="showAddTask"
+  [@fadeInOut]
+  (ngSubmit)="onSubmit()"
   class="add-form">
   <div class="form-control">
     <label for="text">Task</label>

@@ -14,7 +14,7 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskService.getTasks().subscribe((tasks) => {
-      this.tasks = tasks;
+      this.tasks = tasks.sort((a, b) => b.id - a.id);
     });
   }
 
@@ -26,7 +26,7 @@ export class TasksComponent implements OnInit {
 
   addTask(task: Omit<ITask, 'id'>) {
     this.taskService.addTask(task).subscribe((newTask) => {
-      this.tasks.push(newTask);
+      this.tasks = [newTask, ...this.tasks];
     });
   }
 

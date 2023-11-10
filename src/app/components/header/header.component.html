@@ -1,6 +1,6 @@
 <header>
   {{title}}
   <app-button (btnClick)="toggleAddTask()"
-    color="steelblue"
-    text="add"></app-button>
+    color="{{showAddTask?'rgba(70, 131, 180, 0.603)':'steelblue'}}"
+    text="{{ showAddTask ? 'Close' : 'Add' }}"></app-button>
 </header>
