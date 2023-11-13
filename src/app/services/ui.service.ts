@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class UiService {
   private showAddTaks: boolean = false;
-  private subject = new Subject();
+  private subject = new Subject<boolean>();
 
   constructor() {}
 
