@@ -1,5 +1,4 @@
-<div [@deleteEffect]="true?'out':'in'"
-  [ngClass]="{reminder:task.reminder}"
+<div [ngClass]="{reminder:task.reminder}"
   (dblclick)="handleToggleReminder(task)"
   class="task">
   <h3>
