@@ -1,7 +1,11 @@
-<app-add-task (onAddTask)="addTask($event)"></app-add-task>
-<div *ngFor="let task of tasks; trackBy: trackByTaskId "
-  [@simpleFadeAnimation]="'in'">
-  <app-task-item [task]="task"
-    (onDeleteTask)="deleteTask(task.id)"
-    (onToggleTask)="toggleTask(task)"></app-task-item>
+<a routerLink="/promise">Go to Promise</a>
+<div class="container">
+  <app-header></app-header>
+  <app-add-task (onAddTask)="addTask($event)"></app-add-task>
+  <div *ngFor="let task of tasks; trackBy: trackByTaskId "
+    [@simpleFadeAnimation]="'in'">
+    <app-task-item [task]="task"
+      (onDeleteTask)="deleteTask(task.id)"
+      (onToggleTask)="toggleTask(task)"></app-task-item>
+  </div>
 </div>
