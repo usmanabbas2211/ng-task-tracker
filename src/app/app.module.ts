@@ -17,6 +17,7 @@ import { ObservableComponent } from './components/observable/observable.componen
 import { CounterButtonsComponent } from './components/counter/counter-buttons/counter-buttons.component';
 import { CounterOutputComponent } from './components/counter/counter-output/counter-output.component';
 import { CounterHolderComponent } from './components/counter/counter-holder/counter-holder.component';
+import { CounterSvcComponent } from './components/counter-svc/counter-svc.component';
 
 const routes: Routes = [
   { path: 'home', component: TasksComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
     children: [
       { path: 'observable', component: ObservableComponent },
       { path: 'counter', component: CounterHolderComponent },
+      { path: 'counter-service', component: CounterSvcComponent },
     ],
   },
 ];
@@ -44,6 +46,7 @@ const routes: Routes = [
     CounterButtonsComponent,
     CounterOutputComponent,
     CounterHolderComponent,
+    CounterSvcComponent,
   ],
   imports: [
     BrowserModule,
