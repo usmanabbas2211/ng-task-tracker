@@ -22,6 +22,7 @@ import { CounterSvcComponent } from './components/counter-svc/counter-svc.compon
 import { rootReducer } from './store';
 import { CounterStoreComponent } from './components/counter-store/counter-store.component';
 import routesConsts from './constants/routes.constants';
+import { LoginComponent } from './components/auth/login/login.component';
 
 const routes: Routes = [
   { path: routesConsts.home.pathName, component: TasksComponent },
@@ -46,6 +47,10 @@ const routes: Routes = [
         path: routesConsts.counterStore.pathName,
         component: CounterStoreComponent,
       },
+      {
+        path: routesConsts.login.pathName,
+        component: LoginComponent,
+      },
     ],
   },
 ];
@@ -65,6 +70,7 @@ const routes: Routes = [
     CounterHolderComponent,
     CounterSvcComponent,
     CounterStoreComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

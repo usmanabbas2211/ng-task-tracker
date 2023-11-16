@@ -17,6 +17,17 @@
       "text": "Have some food",
       "day": "May 7th at 12:30pm",
       "reminder": true
+    },
+    {
+      "text": "task is here",
+      "day": "post date",
+      "reminder": true,
+      "id": 6
     }
-  ]
+  ],
+  "login": {
+    "name": "John",
+    "email": "john.doe@gmail.com",
+    "token": "9083459827343429483204328795329847"
+  }
 }

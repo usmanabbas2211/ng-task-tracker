@@ -29,6 +29,10 @@ const routesConsts = {
     pathName: 'counter-store',
     route: '/promise/counter-store',
   },
+  login: {
+    pathName: 'login',
+    route: '/promise/login',
+  },
 };
 
 export default routesConsts;
