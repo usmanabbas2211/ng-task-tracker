@@ -1,0 +1,19 @@
+<p>
+  <b>Service Counter</b>
+  : {{ count$ | async }}
+</p>
+
+<div style="margin-top: 10px;">
+  <button (click)="increment()"
+    style="margin: 5px; padding: 5px;">
+    Increment
+  </button>
+  <button (click)="decrement()"
+    style="margin: 5px; padding: 5px;">
+    Decrement
+  </button>
+  <button (click)="reset()"
+    style="margin: 5px; padding: 5px;">
+    Reset
+  </button>
+</div>

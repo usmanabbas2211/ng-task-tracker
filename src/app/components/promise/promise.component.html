@@ -1,12 +1,18 @@
-<a routerLink="/home">Go to home</a>
+<a routerLink="{{routesConsts.home.route}}">Go to home</a>
 <br>
-<a routerLink="/promise/observable">Go to observable</a>
+<a routerLink="{{routesConsts.observable.route}}">Go to observable</a>
 <br>
-<a routerLink="/promise/counter">Go to Counter</a>
+<a routerLink="{{routesConsts.counter.route}}">Go to Counter</a>
 <br>
-<a routerLink="/promise/counter-service">
+<a routerLink={{routesConsts.counterService.route}}>
   Go to Counter via service
 </a>
+<br>
+<a routerLink={{routesConsts.counterStore.route}}>
+  Go to Counter via store
+</a>
+<br>
+<a routerLink={{routesConsts.login.route}}>Go to login page</a>
 <div class="container">
   <router-outlet></router-outlet>
 </div>
