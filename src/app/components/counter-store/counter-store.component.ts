@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { increment, decrement, reset } from '../../store/actions';
+import { CounterState } from '../../types/counter.type';
 
 @Component({
   selector: 'app-counter-store',
@@ -11,8 +12,11 @@ import { increment, decrement, reset } from '../../store/actions';
 export class CounterStoreComponent {
   count$: Observable<number>;
 
-  constructor(private store: Store<{ count: number }>) {
-    this.count$ = store.pipe(select('count'));
+  constructor(private store: Store<{ count: CounterState }>) {
+    this.count$ = store.pipe(
+      select('count'),
+      map((state: CounterState) => state.counter)
+    );
   }
 
   increment() {

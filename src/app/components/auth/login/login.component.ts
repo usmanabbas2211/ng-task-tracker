@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import * as AuthActions from '../../../store/actions/auth.actions';
 
 import { login } from '../../../store/actions/auth.actions';
-import { IUser } from '../../../types/user.type';
+import { AuthState } from '../../../types/auth.types';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,19 @@ import { IUser } from '../../../types/user.type';
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  constructor(private store: Store<{ user: IUser }>) {}
+  loading$: Observable<boolean>;
+  error$: Observable<string | unknown>;
+
+  constructor(private store: Store<{ auth: AuthState }>) {
+    this.loading$ = this.store.pipe(
+      select('auth'),
+      map((state: AuthState) => state.loading)
+    );
+    this.error$ = this.store.pipe(
+      select('auth'),
+      map((state: AuthState) => state.error)
+    );
+  }
   handleSubmit() {
     this.store.dispatch(login({ email: this.email, password: this.password }));
   }

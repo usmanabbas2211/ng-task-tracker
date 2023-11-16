@@ -1,3 +1,7 @@
+<div *ngIf="error$ | async as error"
+  class="error-message">
+  {{ error }}
+</div>
 <form (ngSubmit)="handleSubmit()"
   ngNativeValidate>
   <div style="display: flex; flex-direction: column; margin: auto; width: 50%;">
@@ -13,8 +17,10 @@
       name="password"
       placeholder="Please enter password here"
       required>
-    <input style="margin: 5px; padding: 5px;cursor: pointer;"
-      type="submit"
-      value="submit">
+    <button [disabled]="loading$ | async"
+      style="margin: 5px; padding: 5px;cursor: pointer;"
+      type="submit">
+      {{ (loading$ | async) ? 'Loading...' : 'Submit' }}
+    </button>
   </div>
 </form>
