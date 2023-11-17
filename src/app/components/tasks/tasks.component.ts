@@ -6,9 +6,12 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { Observable, map } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
-import { ITask } from '../../../mock-taks';
+import { ITask, ITaskState } from '../../types/task.types';
 import { TaskService } from '../../services/task.service';
+import * as taskActions from '../../store/actions/task.actions';
 
 @Component({
   selector: 'app-tasks',
@@ -35,17 +38,28 @@ import { TaskService } from '../../services/task.service';
 })
 export class TasksComponent implements OnInit {
   tasks: ITask[] = [];
+  storeTasks$: Observable<ITaskState[]>;
 
   trackByTaskId(index: number, task: ITask): number {
     return task.id;
   }
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private store: Store<{ tasks: ITaskState[] }>
+  ) {
+    this.storeTasks$ = store.pipe(
+      select('tasks'),
+      map((state: ITaskState[]) => state)
+    );
+  }
 
   ngOnInit(): void {
-    this.taskService.getTasks().subscribe((tasks) => {
-      this.tasks = tasks.sort((a, b) => b.id - a.id);
-    });
+    this.store.dispatch(taskActions.getAllTaks());
+    console.log(this.storeTasks$);
+    // this.taskService.getTasks().subscribe((tasks) => {
+    //   this.tasks = tasks.sort((a, b) => b.id - a.id);
+    // });
   }
 
   deleteTask(id: number) {
@@ -55,6 +69,7 @@ export class TasksComponent implements OnInit {
   }
 
   addTask(task: Omit<ITask, 'id'>) {
+    console.log(this.storeTasks$);
     this.taskService.addTask(task).subscribe((newTask) => {
       this.tasks = [newTask, ...this.tasks];
     });

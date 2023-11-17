@@ -1,9 +1,5 @@
-export interface ITask {
-  id: number;
-  text: string;
-  day: string;
-  reminder: boolean;
-}
+import { ITask } from './app/types/task.types';
+
 export const tasks: ITask[] = [
   {
     id: 1,

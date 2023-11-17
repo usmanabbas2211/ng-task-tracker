@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tasks as defaultTasks, ITask } from '../../mock-taks';
+import { ITask } from '../types/task.types';
 
 const httpOptions = {
   headers: new HttpHeaders({

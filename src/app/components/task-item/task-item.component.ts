@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ITask } from '../../../mock-taks';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ITask } from 'src/app/types/task.types';
 
 @Component({
   selector: 'app-task-item',
