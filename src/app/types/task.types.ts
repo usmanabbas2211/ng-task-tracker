@@ -8,5 +8,7 @@ export interface ITask {
 export interface ITaskState {
   tasks: ITask[];
   loading: boolean;
+  addTaskLoading: boolean;
+  deleteTaskLoading: boolean;
   error: unknown;
 }

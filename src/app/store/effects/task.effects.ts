@@ -20,5 +20,29 @@ export class TaskEffects {
     );
   });
 
+  addTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(taskaction.addTask),
+      switchMap((action) =>
+        this.taskService.addTask(action.task).pipe(
+          map((task) => taskaction.addTaskSuccess({ task })),
+          catchError((error) => of(taskaction.getAllTaksFailure({ error })))
+        )
+      )
+    );
+  });
+
+  updateTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(taskaction.deleteTask),
+      switchMap((action) =>
+        this.taskService.deleteTask(action.id).pipe(
+          map(() => taskaction.deleteTaskSuccess({ id: action.id })),
+          catchError((error) => of(taskaction.getAllTaksFailure({ error })))
+        )
+      )
+    );
+  });
+
   constructor(private actions$: Actions, private taskService: TaskService) {}
 }

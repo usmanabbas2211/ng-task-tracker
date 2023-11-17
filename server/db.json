@@ -25,9 +25,9 @@
       "id": 6
     },
     {
-      "text": "asdf",
-      "day": "wre",
-      "reminder": false,
+      "text": "test",
+      "day": "tetr",
+      "reminder": true,
       "id": 7
     }
   ],

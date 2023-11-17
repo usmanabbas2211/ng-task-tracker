@@ -38,7 +38,7 @@ import * as taskActions from '../../store/actions/task.actions';
 })
 export class TasksComponent implements OnInit {
   tasks: ITask[] = [];
-  storeTasks$: Observable<ITaskState[]>;
+  storeTasks$: Observable<ITask[]>;
 
   trackByTaskId(index: number, task: ITask): number {
     return task.id;
@@ -46,33 +46,28 @@ export class TasksComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private store: Store<{ tasks: ITaskState[] }>
+    private store: Store<{ tasks: ITaskState }>
   ) {
     this.storeTasks$ = store.pipe(
       select('tasks'),
-      map((state: ITaskState[]) => state)
+      map((state: ITaskState) => {
+        const sortedTasks = [...state.tasks];
+        return sortedTasks.sort((a, b) => b.id - a.id);
+      })
     );
   }
 
   ngOnInit(): void {
     this.store.dispatch(taskActions.getAllTaks());
-    console.log(this.storeTasks$);
-    // this.taskService.getTasks().subscribe((tasks) => {
-    //   this.tasks = tasks.sort((a, b) => b.id - a.id);
-    // });
+    this.storeTasks$.subscribe((tasks: ITask[]) => {});
   }
 
   deleteTask(id: number) {
-    this.taskService.deleteTask(id).subscribe(() => {
-      this.tasks = this.tasks.filter((t) => t.id !== id);
-    });
+    this.store.dispatch(taskActions.deleteTask({ id }));
   }
 
   addTask(task: Omit<ITask, 'id'>) {
-    console.log(this.storeTasks$);
-    this.taskService.addTask(task).subscribe((newTask) => {
-      this.tasks = [newTask, ...this.tasks];
-    });
+    this.store.dispatch(taskActions.addTask({ task }));
   }
 
   toggleTask(task: ITask) {

@@ -2,7 +2,7 @@
 <div class="container">
   <app-header></app-header>
   <app-add-task (onAddTask)="addTask($event)"></app-add-task>
-  <div *ngFor="let task of tasks; trackBy: trackByTaskId "
+  <div *ngFor="let task of storeTasks$ | async ; trackBy: trackByTaskId "
     [@simpleFadeAnimation]="'in'">
     <app-task-item [task]="task"
       (onDeleteTask)="deleteTask(task.id)"

@@ -5,6 +5,8 @@ import { ITask, ITaskState } from '../../types/task.types';
 export const initialState: ITaskState = {
   tasks: [],
   loading: false,
+  addTaskLoading: false,
+  deleteTaskLoading: false,
   error: null,
 };
 
@@ -23,6 +25,34 @@ const _taskReducer = createReducer(
     ...state,
     error,
     loading: false,
+  })),
+  on(taskAction.addTask, (state) => ({
+    ...state,
+    addTaskLoading: true,
+  })),
+  on(taskAction.addTaskSuccess, (state, { task }) => ({
+    ...state,
+    addTaskLoading: false,
+    tasks: [task, ...state.tasks],
+  })),
+  on(taskAction.addTaskFailure, (state, { error }) => ({
+    ...state,
+    addTaskLoading: false,
+    error,
+  })),
+  on(taskAction.deleteTask, (state) => ({
+    ...state,
+    deleteTaskLoading: true,
+  })),
+  on(taskAction.deleteTaskSuccess, (state, { id }) => ({
+    ...state,
+    deleteTaskLoading: false,
+    tasks: state.tasks.filter((t: ITask) => t.id !== id),
+  })),
+  on(taskAction.deleteTaskFailure, (state, { error }) => ({
+    ...state,
+    deleteTaskLoading: false,
+    error,
   }))
 );
 

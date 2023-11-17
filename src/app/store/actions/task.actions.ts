@@ -13,12 +13,27 @@ export const getAllTaksFailure = createAction(
 
 export const addTask = createAction(
   '[tasks] add task',
-  props<Omit<ITask, 'id'>>()
+  props<{ task: Omit<ITask, 'id'> }>()
+);
+
+export const deleteTask = createAction(
+  '[tasks] delete task',
+  props<{ id: number }>()
+);
+
+export const deleteTaskSuccess = createAction(
+  '[tasks] delete success',
+  props<{ id: number }>()
+);
+
+export const deleteTaskFailure = createAction(
+  '[tasks] delete failure',
+  props<{ error: unknown }>()
 );
 
 export const addTaskSuccess = createAction(
   '[tasks] add task success',
-  props<ITask>()
+  props<{ task: ITask }>()
 );
 
 export const addTaskFailure = createAction(
