@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import {
   trigger,
   state,
@@ -47,6 +47,8 @@ const fadeInOutTransition = [
 })
 export class AddTaskComponent {
   @Output() onAddTask: EventEmitter<Omit<ITask, 'id'>> = new EventEmitter();
+
+  @Input() addTaskLoading: boolean | undefined;
 
   text: string = '';
   day: string = '';

@@ -3,7 +3,12 @@
   class="task">
   <h3>
     {{task.text}}
-    <fa-icon [ngStyle]="{'color':'red'}"
+    <fa-icon *ngIf="beingDeleted"
+      [spin]="true"
+      [ngStyle]="{'color':'steelblue'}"
+      [icon]="faSpinner"></fa-icon>
+    <fa-icon *ngIf="!beingDeleted"
+      [ngStyle]="{'color':'red'}"
       [icon]="faTimes"
       (click)="handleDelete(task.id)"></fa-icon>
   </h3>

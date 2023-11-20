@@ -38,7 +38,12 @@ import * as taskActions from '../../store/actions/task.actions';
 })
 export class TasksComponent implements OnInit {
   tasks: ITask[] = [];
-  storeTasks$: Observable<ITask[]>;
+  taskToDelete: number = -1;
+  storeData$: Observable<{
+    tasks: ITask[];
+    loading: boolean;
+    addTaskLoading: boolean;
+  }>;
 
   trackByTaskId(index: number, task: ITask): number {
     return task.id;
@@ -48,25 +53,31 @@ export class TasksComponent implements OnInit {
     private taskService: TaskService,
     private store: Store<{ tasks: ITaskState }>
   ) {
-    this.storeTasks$ = store.pipe(
+    this.storeData$ = store.pipe(
       select('tasks'),
-      map((state: ITaskState) => {
-        const sortedTasks = [...state.tasks];
-        return sortedTasks.sort((a, b) => b.id - a.id);
-      })
+      map((state: ITaskState) => ({
+        tasks: [...state.tasks].sort((a, b) => b.id - a.id),
+        loading: state.loading,
+        addTaskLoading: state.addTaskLoading,
+      }))
     );
   }
 
   ngOnInit(): void {
     this.store.dispatch(taskActions.getAllTaks());
-    this.storeTasks$.subscribe((tasks: ITask[]) => {});
+    this.storeData$.subscribe((data) => {
+      const tasks = data.tasks;
+      const loading = data.loading;
+    });
   }
 
   deleteTask(id: number) {
+    this.taskToDelete = id;
     this.store.dispatch(taskActions.deleteTask({ id }));
   }
 
   addTask(task: Omit<ITask, 'id'>) {
+    this.taskToDelete = -1;
     this.store.dispatch(taskActions.addTask({ task }));
   }
 

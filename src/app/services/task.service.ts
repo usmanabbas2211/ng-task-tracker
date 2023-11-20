@@ -17,9 +17,6 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   getTasks(): Observable<ITask[]> {
-    // const tasks = of(defaultTasks);
-    // return tasks;
-
     return this.http.get<ITask[]>(this.apiUrl);
   }
 
