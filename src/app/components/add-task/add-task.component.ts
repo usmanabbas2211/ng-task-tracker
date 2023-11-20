@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import {
   trigger,
   state,
@@ -6,9 +6,9 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { ITask } from '../../../mock-taks';
 import { Subscription } from 'rxjs';
 import { UiService } from '../../services/ui.service';
+import { ITask } from 'src/app/types/task.types';
 
 const slideInOutTransition = [
   state(
@@ -47,6 +47,8 @@ const fadeInOutTransition = [
 })
 export class AddTaskComponent {
   @Output() onAddTask: EventEmitter<Omit<ITask, 'id'>> = new EventEmitter();
+
+  @Input() addTaskLoading: boolean | undefined;
 
   text: string = '';
   day: string = '';

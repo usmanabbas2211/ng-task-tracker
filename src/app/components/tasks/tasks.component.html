@@ -1,11 +1,23 @@
 <a routerLink="/promise">Go to Promise</a>
-<div class="container">
+
+<ng-template #loader>
+  <div>Loading...</div>
+</ng-template>
+
+<div *ngIf="storeData$ | async as taskData ;"
+  class="container">
   <app-header></app-header>
-  <app-add-task (onAddTask)="addTask($event)"></app-add-task>
-  <div *ngFor="let task of tasks; trackBy: trackByTaskId "
-    [@simpleFadeAnimation]="'in'">
-    <app-task-item [task]="task"
-      (onDeleteTask)="deleteTask(task.id)"
-      (onToggleTask)="toggleTask(task)"></app-task-item>
-  </div>
+  <app-add-task [addTaskLoading]="taskData.addTaskLoading"
+    (onAddTask)="addTask($event)"></app-add-task>
+
+  <ng-container *ngIf="!taskData.loading; else loader">
+    <div *ngFor="let task of taskData.tasks; trackBy: trackByTaskId "
+      [@simpleFadeAnimation]="'in'">
+      <app-task-item [task]="task"
+        [beingDeleted]="task.id===taskToDelete?true:false"
+        [beindToggled]="task.id===taskData.toggleTaskLoading"
+        (onDeleteTask)="deleteTask(task.id)"
+        (onToggleTask)="toggleTask(task.id,task.reminder)"></app-task-item>
+    </div>
+  </ng-container>
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tasks as defaultTasks, ITask } from '../../mock-taks';
+import { ITask } from '../types/task.types';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,9 +17,6 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   getTasks(): Observable<ITask[]> {
-    // const tasks = of(defaultTasks);
-    // return tasks;
-
     return this.http.get<ITask[]>(this.apiUrl);
   }
 
@@ -32,12 +29,8 @@ export class TaskService {
     return this.http.post<ITask>(this.apiUrl, task, httpOptions);
   }
 
-  toggleReminder(task: ITask): Observable<ITask> {
-    const url = `${this.apiUrl}/${task.id}`;
-    return this.http.patch<ITask>(
-      url,
-      { reminder: !task.reminder },
-      httpOptions
-    );
+  toggleReminder(id: number, reminder: boolean): Observable<ITask> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.patch<ITask>(url, { reminder: !reminder }, httpOptions);
   }
 }

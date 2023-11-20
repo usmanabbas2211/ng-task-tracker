@@ -21,12 +21,9 @@ export class ObservableComponent implements OnInit, AfterViewInit {
   @ViewChild('addBtn')
   addBtn!: ElementRef;
 
-  ngOnInit(): void {
-    console.log('init');
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    console.log('done');
     fromEvent(this.addBtn.nativeElement, 'click')
       .pipe(throttleTime(1000))
       .subscribe({

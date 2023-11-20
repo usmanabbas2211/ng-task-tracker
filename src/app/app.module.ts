@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -28,6 +29,7 @@ import routesConsts from './constants/routes.constants';
 import { LoginComponent } from './components/auth/login/login.component';
 import { AuthEffects } from './store/effects/auth.effects';
 import { CustomInterceptor } from './utils/interceptor.utils';
+import { TaskEffects } from './store/effects/task.effects';
 
 const routes: Routes = [
   { path: routesConsts.home.pathName, component: TasksComponent },
@@ -84,9 +86,10 @@ const routes: Routes = [
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25 }),
     RouterModule.forRoot(routes),
     StoreModule.forRoot(rootReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, TaskEffects]),
   ],
   providers: [
     {

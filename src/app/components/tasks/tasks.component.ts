@@ -6,9 +6,11 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { Observable, map } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
-import { ITask } from '../../../mock-taks';
-import { TaskService } from '../../services/task.service';
+import { ITask, ITaskState } from '../../types/task.types';
+import * as taskActions from '../../store/actions/task.actions';
 
 @Component({
   selector: 'app-tasks',
@@ -35,36 +37,46 @@ import { TaskService } from '../../services/task.service';
 })
 export class TasksComponent implements OnInit {
   tasks: ITask[] = [];
+  taskToDelete: number = -1;
+
+  storeData$: Observable<{
+    tasks: ITask[];
+    loading: boolean;
+    addTaskLoading: boolean;
+    toggleTaskLoading: number | null;
+  }>;
 
   trackByTaskId(index: number, task: ITask): number {
     return task.id;
   }
 
-  constructor(private taskService: TaskService) {}
+  constructor(private store: Store<{ tasks: ITaskState }>) {
+    this.storeData$ = store.pipe(
+      select('tasks'),
+      map((state: ITaskState) => ({
+        tasks: [...state.tasks].sort((a, b) => b.id - a.id),
+        loading: state.loading,
+        addTaskLoading: state.addTaskLoading,
+        toggleTaskLoading: state.toggleTaskLoading,
+      }))
+    );
+  }
 
   ngOnInit(): void {
-    this.taskService.getTasks().subscribe((tasks) => {
-      this.tasks = tasks.sort((a, b) => b.id - a.id);
-    });
+    this.store.dispatch(taskActions.getAllTaks());
   }
 
   deleteTask(id: number) {
-    this.taskService.deleteTask(id).subscribe(() => {
-      this.tasks = this.tasks.filter((t) => t.id !== id);
-    });
+    this.taskToDelete = id;
+    this.store.dispatch(taskActions.deleteTask({ id }));
   }
 
   addTask(task: Omit<ITask, 'id'>) {
-    this.taskService.addTask(task).subscribe((newTask) => {
-      this.tasks = [newTask, ...this.tasks];
-    });
+    this.taskToDelete = -1;
+    this.store.dispatch(taskActions.addTask({ task }));
   }
 
-  toggleTask(task: ITask) {
-    this.taskService.toggleReminder(task).subscribe((updatedTask) => {
-      this.tasks = this.tasks.map((t: ITask) =>
-        t.id !== task.id ? t : updatedTask
-      );
-    });
+  toggleTask(id: number, reminder: boolean) {
+    this.store.dispatch(taskActions.toggleReminder({ id, reminder }));
   }
 }
