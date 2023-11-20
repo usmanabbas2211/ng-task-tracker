@@ -10,7 +10,6 @@ import { Observable, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 import { ITask, ITaskState } from '../../types/task.types';
-import { TaskService } from '../../services/task.service';
 import * as taskActions from '../../store/actions/task.actions';
 
 @Component({
@@ -39,36 +38,32 @@ import * as taskActions from '../../store/actions/task.actions';
 export class TasksComponent implements OnInit {
   tasks: ITask[] = [];
   taskToDelete: number = -1;
+
   storeData$: Observable<{
     tasks: ITask[];
     loading: boolean;
     addTaskLoading: boolean;
+    toggleTaskLoading: number | null;
   }>;
 
   trackByTaskId(index: number, task: ITask): number {
     return task.id;
   }
 
-  constructor(
-    private taskService: TaskService,
-    private store: Store<{ tasks: ITaskState }>
-  ) {
+  constructor(private store: Store<{ tasks: ITaskState }>) {
     this.storeData$ = store.pipe(
       select('tasks'),
       map((state: ITaskState) => ({
         tasks: [...state.tasks].sort((a, b) => b.id - a.id),
         loading: state.loading,
         addTaskLoading: state.addTaskLoading,
+        toggleTaskLoading: state.toggleTaskLoading,
       }))
     );
   }
 
   ngOnInit(): void {
     this.store.dispatch(taskActions.getAllTaks());
-    this.storeData$.subscribe((data) => {
-      const tasks = data.tasks;
-      const loading = data.loading;
-    });
   }
 
   deleteTask(id: number) {
@@ -81,11 +76,7 @@ export class TasksComponent implements OnInit {
     this.store.dispatch(taskActions.addTask({ task }));
   }
 
-  toggleTask(task: ITask) {
-    this.taskService.toggleReminder(task).subscribe((updatedTask) => {
-      this.tasks = this.tasks.map((t: ITask) =>
-        t.id !== task.id ? t : updatedTask
-      );
-    });
+  toggleTask(id: number, reminder: boolean) {
+    this.store.dispatch(taskActions.toggleReminder({ id, reminder }));
   }
 }

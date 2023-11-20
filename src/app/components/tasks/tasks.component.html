@@ -15,8 +15,9 @@
       [@simpleFadeAnimation]="'in'">
       <app-task-item [task]="task"
         [beingDeleted]="task.id===taskToDelete?true:false"
+        [beindToggled]="task.id===taskData.toggleTaskLoading"
         (onDeleteTask)="deleteTask(task.id)"
-        (onToggleTask)="toggleTask(task)"></app-task-item>
+        (onToggleTask)="toggleTask(task.id,task.reminder)"></app-task-item>
     </div>
   </ng-container>
 </div>

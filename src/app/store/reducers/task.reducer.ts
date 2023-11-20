@@ -9,6 +9,7 @@ export const initialState: ITaskState = {
   loading: false,
   addTaskLoading: false,
   deleteTaskLoading: false,
+  toggleTaskLoading: null,
   error: null,
 };
 
@@ -63,6 +64,25 @@ const _taskReducer = createReducer(
     produce(state, (draftState: ITaskState) => {
       draftState.deleteTaskLoading = false;
       draftState.error = error;
+    })
+  ),
+  on(taskAction.toggleReminder, (state, { id }) =>
+    produce(state, (draft: ITaskState) => {
+      draft.toggleTaskLoading = id;
+    })
+  ),
+  on(taskAction.toggleReminderSuccess, (state, { task }) =>
+    produce(state, (draft: ITaskState) => {
+      draft.toggleTaskLoading = null;
+      draft.tasks = state.tasks.map((t: ITask) =>
+        t.id !== task.id ? t : task
+      );
+    })
+  ),
+  on(taskAction.toggleReminderFailure, (state, { error }) =>
+    produce(state, (draft: ITaskState) => {
+      draft.toggleTaskLoading = null;
+      draft.error = error;
     })
   )
 );

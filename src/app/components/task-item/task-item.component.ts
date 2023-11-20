@@ -11,6 +11,7 @@ import { ITask } from 'src/app/types/task.types';
 export class TaskItemComponent {
   @Input() task!: ITask;
   @Input() beingDeleted!: boolean;
+  @Input() beindToggled!: boolean;
   @Output() onDeleteTask: EventEmitter<number> = new EventEmitter();
   @Output() onToggleTask: EventEmitter<ITask> = new EventEmitter();
   faTimes = faTimes;

@@ -27,7 +27,7 @@
     {
       "text": "ds",
       "day": "sf",
-      "reminder": false,
+      "reminder": true,
       "id": 7
     }
   ],

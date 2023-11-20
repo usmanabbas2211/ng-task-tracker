@@ -44,5 +44,19 @@ export class TaskEffects {
     );
   });
 
+  toggleReminder$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(taskaction.toggleReminder),
+      switchMap((action) =>
+        this.taskService.toggleReminder(action.id, action.reminder).pipe(
+          map((response) =>
+            taskaction.toggleReminderSuccess({ task: response })
+          ),
+          catchError((error) => of(taskaction.toggleReminderFailure({ error })))
+        )
+      )
+    );
+  });
+
   constructor(private actions$: Actions, private taskService: TaskService) {}
 }

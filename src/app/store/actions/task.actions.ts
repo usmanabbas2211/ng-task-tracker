@@ -40,3 +40,18 @@ export const addTaskFailure = createAction(
   '[tasks] add task failure',
   props<{ error: unknown }>()
 );
+
+export const toggleReminder = createAction(
+  '[tasks] toggle reminder',
+  props<{ id: number; reminder: boolean }>()
+);
+
+export const toggleReminderSuccess = createAction(
+  '[tasks] toggle reminder success',
+  props<{ task: ITask }>()
+);
+
+export const toggleReminderFailure = createAction(
+  '[tasks] toggle reminder failure',
+  props<{ error: unknown }>()
+);

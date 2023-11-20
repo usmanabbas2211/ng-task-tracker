@@ -29,12 +29,8 @@ export class TaskService {
     return this.http.post<ITask>(this.apiUrl, task, httpOptions);
   }
 
-  toggleReminder(task: ITask): Observable<ITask> {
-    const url = `${this.apiUrl}/${task.id}`;
-    return this.http.patch<ITask>(
-      url,
-      { reminder: !task.reminder },
-      httpOptions
-    );
+  toggleReminder(id: number, reminder: boolean): Observable<ITask> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.patch<ITask>(url, { reminder: !reminder }, httpOptions);
   }
 }

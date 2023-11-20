@@ -10,5 +10,6 @@ export interface ITaskState {
   loading: boolean;
   addTaskLoading: boolean;
   deleteTaskLoading: boolean;
+  toggleTaskLoading: number | null;
   error: unknown;
 }
